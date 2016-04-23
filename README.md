@@ -1,5 +1,4 @@
 # Meteor-Starter for angular2
-
 1.安装Meteor
 Linux或Mac命令行安装:
   $ curl https://install.meteor.com/ | sh
