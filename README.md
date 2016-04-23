@@ -5,14 +5,18 @@ Linux或Mac命令行安装:
   $ curl https://install.meteor.com/ | sh
 Windows安装:
   https://www.meteor.com/install
+  
 2.创建项目
   meteor create socially
+  
 3.运行项目
   cd socially => meteor => http://localhost:3000/访问
+  
 4.初始化package.json
   npm init
   npm install angular2-meteor --save
   npm install angular2-meteor-auto-bootstrap --save
+  
 5.安装typescript\typings
   npm install typings typescript -g --save
   初化化tsconfig.json=>typescript init
