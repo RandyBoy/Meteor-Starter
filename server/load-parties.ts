@@ -1,20 +1,8 @@
-import 'reflect-metadata';
-import 'zone.js/dist/zone';
-import {Component, NgZone} from 'angular2/core';
-// import {bootstrap} from 'angular2/platform/browser';
-import {bootstrap} from 'angular2-meteor-auto-bootstrap';
-import {Parties} from '../collections/parties';
-//import {Mongo} from 'meteor/mongo'
-@Component({
-    selector: 'app',
-    templateUrl: 'client/app.html'
-})
-export class App {
-    parties:Array<Object>;
-    //parties: Mongo.Cursor<Object>;
-    constructor() {
-       // this.parties =  Parties.find();
-        this.parties = [
+import {Parties} from '../collections/parties.ts';
+export function loadParties() {
+    if (Parties.find().count() === 0) {
+
+        let parties = [
             {
                 'name': 'Dubstep-Free Zone',
                 'description': 'Can we please just for an evening not listen to dubstep.',
@@ -31,8 +19,9 @@ export class App {
                 'location': 'San Francisco'
             }
         ];
-        
-    }
-}
 
-bootstrap(App);
+        for (let i = 0; i < parties.length; i++) {
+            Parties.insert(parties[i]);
+        }
+    }
+};
