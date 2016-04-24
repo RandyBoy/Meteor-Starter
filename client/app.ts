@@ -1,38 +1,42 @@
-import 'reflect-metadata';
 import 'zone.js/dist/zone';
-import {Component, NgZone} from 'angular2/core';
+import 'reflect-metadata';
+import {Component} from 'angular2/core';
 // import {bootstrap} from 'angular2/platform/browser';
 import {bootstrap} from 'angular2-meteor-auto-bootstrap';
 import {Parties} from '../collections/parties';
-//import {Mongo} from 'meteor/mongo'
+import {Mongo} from 'meteor/mongo';
+import {RequestService} from '../collections/requestService';
+import {Http, HTTP_PROVIDERS} from 'angular2/http';
+import {TodoItem} from "../collections/TodoItem";
+
 @Component({
     selector: 'app',
-    templateUrl: 'client/app.html'
+    templateUrl: 'client/app.html',
+    providers: [RequestService, HTTP_PROVIDERS]
 })
 export class App {
-    parties:Array<Object>;
-    //parties: Mongo.Cursor<Object>;
-    constructor() {
-       // this.parties =  Parties.find();
-        this.parties = [
-            {
-                'name': 'Dubstep-Free Zone',
-                'description': 'Can we please just for an evening not listen to dubstep.',
-                'location': 'Palo Alto'
-            },
-            {
-                'name': 'All dubstep all the time',
-                'description': 'Get it on!',
-                'location': 'Palo Alto'
-            },
-            {
-                'name': 'Savage lounging',
-                'description': 'Leisure suit required. And only fiercest manners.',
-                'location': 'San Francisco'
-            }
-        ];
-        
-    }
-}
+    parties: Mongo.Cursor<Object>;
+    result: any;
+    todoItems: TodoItem[];
+    todoJson: string;
+    errorMessage: any;
 
+    constructor(private requestService: RequestService) {
+        this.parties = Parties.find();
+        requestService.GetTodoItems().then(res => {
+            this.result = JSON.stringify(res.json());
+        });
+    }
+
+    UpdateTodoItem() {
+        this.requestService
+            .AddTodoItem(35, "add todo item", true)
+            .subscribe(data => {
+                this.todoItems = data;
+                this.todoJson = JSON.stringify(this.todoItems);
+            },
+            error => this.errorMessage = <any>error);
+    }
+
+}
 bootstrap(App);

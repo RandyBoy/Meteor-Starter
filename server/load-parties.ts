@@ -1,4 +1,5 @@
-import {Parties} from '../collections/parties.ts';
+import { Parties } from '../collections/parties.ts';
+
 export function loadParties() {
     if (Parties.find().count() === 0) {
 
@@ -24,4 +25,5 @@ export function loadParties() {
             Parties.insert(parties[i]);
         }
     }
-};
+
+}; 
