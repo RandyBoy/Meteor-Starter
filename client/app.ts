@@ -1,38 +1,61 @@
-import 'reflect-metadata';
 import 'zone.js/dist/zone';
-import {Component, NgZone} from 'angular2/core';
+import 'reflect-metadata';
+import {Component, provide} from 'angular2/core';
 // import {bootstrap} from 'angular2/platform/browser';
 import {bootstrap} from 'angular2-meteor-auto-bootstrap';
-import {Parties} from '../collections/parties';
+<<<<<<< HEAD
+//import {Parties} from '../collections/parties';
 //import {Mongo} from 'meteor/mongo'
+=======
+import {Parties} from '../collections/parties';
+import {Mongo} from 'meteor/mongo';
+import { Meteor } from 'meteor/meteor';
+import {RequestService} from '../collections/requestService';
+import {Http, HTTP_PROVIDERS} from 'angular2/http';
+import {TodoItem} from "../collections/TodoItem";
+import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig, APP_BASE_HREF} from 'angular2/router';
+import {PartiesList} from './parties-list/parties-list';
+import {PartyDetails} from './party-details/party-details';
+
+>>>>>>> 682a8d59e5ed871d9865b72f30d44e1f1b5dc49f
 @Component({
     selector: 'app',
-    templateUrl: 'client/app.html'
+    templateUrl: 'client/app.html',
+    directives: [ROUTER_DIRECTIVES],
+    providers: [RequestService, HTTP_PROVIDERS]
 })
-export class App {
-    parties:Array<Object>;
-    //parties: Mongo.Cursor<Object>;
-    constructor() {
-       // this.parties =  Parties.find();
-        this.parties = [
-            {
-                'name': 'Dubstep-Free Zone',
-                'description': 'Can we please just for an evening not listen to dubstep.',
-                'location': 'Palo Alto'
-            },
-            {
-                'name': 'All dubstep all the time',
-                'description': 'Get it on!',
-                'location': 'Palo Alto'
-            },
-            {
-                'name': 'Savage lounging',
-                'description': 'Leisure suit required. And only fiercest manners.',
-                'location': 'San Francisco'
-            }
-        ];
-        
-    }
-}
+@RouteConfig([
+    { path: '/', as: 'PartiesList', component: PartiesList },
+    { path: '/party/:partyId', as: 'PartyDetails', component: PartyDetails }
+])
 
-bootstrap(App);
+export class App {
+    parties: Mongo.Cursor<Party>;
+    result: any;
+    todoItems: TodoItem[];
+    todoJson: string;
+    errorMessage: any;
+
+    constructor(private requestService: RequestService) {
+        //  this.parties = Parties.find();
+        Meteor.subscribe('parties', () => {
+            this.parties = Parties.find();
+        });
+        requestService.GetTodoItems().then(res => {
+            this.result = JSON.stringify(res.json());
+        });
+    }
+
+    UpdateTodoItem() {
+
+        this.requestService
+            .AddTodoItem(35, "add todo item", true)
+            .subscribe(data => {
+                this.todoItems = data;
+                this.todoJson = JSON.stringify(this.todoItems);
+            },
+            error => this.errorMessage = <any>error);
+    }
+
+}
+bootstrap(App, [ROUTER_PROVIDERS, provide(APP_BASE_HREF, { useValue: '/' })]);

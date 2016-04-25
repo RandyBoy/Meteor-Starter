@@ -1,3 +1,4 @@
+<router-outlet></router-outlet>
 <p>1 + 2 = {{ 1 + 2 }}</p>
 <div>
     <ul>
@@ -7,4 +8,11 @@
             <p>{{party.location}}</p>
         </li>
     </ul>
+</div>
+<div>
+    <p>{{result}}</p>
+    {{todoJson}}
+</div>
+<div>
+    <button primary (click)="UpdateTodoItem();">更新</button>
 </div>
