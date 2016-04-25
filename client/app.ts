@@ -3,10 +3,7 @@ import 'reflect-metadata';
 import {Component, provide} from 'angular2/core';
 // import {bootstrap} from 'angular2/platform/browser';
 import {bootstrap} from 'angular2-meteor-auto-bootstrap';
-<<<<<<< HEAD
-//import {Parties} from '../collections/parties';
-//import {Mongo} from 'meteor/mongo'
-=======
+
 import {Parties} from '../collections/parties';
 import {Mongo} from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
@@ -17,7 +14,6 @@ import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig, APP_BASE_HREF} from 'a
 import {PartiesList} from './parties-list/parties-list';
 import {PartyDetails} from './party-details/party-details';
 
->>>>>>> 682a8d59e5ed871d9865b72f30d44e1f1b5dc49f
 @Component({
     selector: 'app',
     templateUrl: 'client/app.html',
