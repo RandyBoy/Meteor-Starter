@@ -3,15 +3,15 @@ import 'reflect-metadata';
 import {Component, provide} from 'angular2/core';
 // import {bootstrap} from 'angular2/platform/browser';
 import {bootstrap} from 'angular2-meteor-auto-bootstrap';
-import {Parties} from '../collections/parties';
+import {MeteorComponent} from 'angular2-meteor';
 import {Mongo} from 'meteor/mongo';
-import { Meteor } from 'meteor/meteor';
 import {RequestService} from '../collections/requestService.ts';
 import {HTTP_PROVIDERS} from 'angular2/http';
-import {TodoItem} from "../collections/TodoItem.ts";
 import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig, APP_BASE_HREF, RouterOutlet} from 'angular2/router';
 import {PartiesList} from './parties-list/parties-list.ts';
 import {PartyDetails} from "./party-details/party-details";
+import {Parties} from '../collections/parties';
+import {TodoItem} from "../collections/TodoItem.ts";
 
 @Component({
     selector: 'app',
@@ -24,7 +24,7 @@ import {PartyDetails} from "./party-details/party-details";
     { path: '/', as: 'PartiesList', component: PartiesList, useAsDefault: true },
     { path: '/party/:partyId', as: 'PartyDetails', component: PartyDetails }
 ])
-export class App {
+export class App extends MeteorComponent {
     parties: Mongo.Cursor<Party>;
     result: any;
     todoItems: TodoItem[];
@@ -33,8 +33,9 @@ export class App {
 
     constructor(private requestService: RequestService) {
         // this.parties = Parties.find();
-        Meteor.subscribe('parties', () => {
-            this.parties = Parties.find(); 
+        super();
+        this.subscribe('parties', () => {
+            this.parties = Parties.find();
         });
         requestService.GetTodoItems().then(res => {
             this.result = JSON.stringify(res.json());
