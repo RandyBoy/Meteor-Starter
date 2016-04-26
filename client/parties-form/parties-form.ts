@@ -24,11 +24,14 @@ export class PartiesForm {
                 name: party.name,
                 description: party.description,
                 location: party.location,
-                public: true
+                public: party.public
             });
             (<Control>this.partiesForm.controls['name']).updateValue('');
             (<Control>this.partiesForm.controls['description']).updateValue('');
             (<Control>this.partiesForm.controls['location']).updateValue('');
+            (<Control>this.partiesForm.controls['public']).updateValue(false);
+        } else {
+            alert('Please log in to add a party');
         }
     }
 }

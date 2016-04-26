@@ -3,18 +3,20 @@ import {Component} from 'angular2/core';
 import {Parties} from '../../collections/parties';
 import {PartiesForm} from '../parties-form/parties-form.ts';
 import {RouterLink} from 'angular2/router';
+import {MeteorComponent} from 'angular2-meteor';
 
 @Component({
     selector: 'parties-list',
     templateUrl: 'client/parties-list/parties-list.html',
     directives: [PartiesForm, RouterLink]
 })
-export class PartiesList {
+export class PartiesList extends MeteorComponent {
     parties: Mongo.Cursor<Party>;
 
     constructor() {
+        super();
         // this.parties = Parties.find();
-        Meteor.subscribe('parties', () => {
+        this.subscribe('parties', () => {
             this.parties = Parties.find();
         });
     }

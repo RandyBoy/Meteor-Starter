@@ -9,19 +9,19 @@ import { Meteor } from 'meteor/meteor';
 import {RequestService} from '../collections/requestService.ts';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {TodoItem} from "../collections/TodoItem.ts";
-import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig, APP_BASE_HREF} from 'angular2/router';
+import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig, APP_BASE_HREF, RouterOutlet} from 'angular2/router';
 import {PartiesList} from './parties-list/parties-list.ts';
 import {PartyDetails} from "./party-details/party-details";
 
 @Component({
     selector: 'app',
     templateUrl: 'client/app.html',
-    directives: [ROUTER_DIRECTIVES],
+    directives: [ROUTER_DIRECTIVES, RouterOutlet],
     providers: [RequestService]
 })
 
 @RouteConfig([
-    { path: '/', as: 'PartiesList', component: PartiesList },
+    { path: '/', as: 'PartiesList', component: PartiesList, useAsDefault: true },
     { path: '/party/:partyId', as: 'PartyDetails', component: PartyDetails }
 ])
 export class App {
@@ -34,7 +34,7 @@ export class App {
     constructor(private requestService: RequestService) {
         // this.parties = Parties.find();
         Meteor.subscribe('parties', () => {
-            this.parties = Parties.find();
+            this.parties = Parties.find(); 
         });
         requestService.GetTodoItems().then(res => {
             this.result = JSON.stringify(res.json());
