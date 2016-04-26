@@ -10,6 +10,7 @@ import {RequestService} from '../collections/requestService.ts';
 import {Http, HTTP_PROVIDERS} from 'angular2/http';
 import {TodoItem} from "../collections/TodoItem.ts";
 import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig, APP_BASE_HREF} from 'angular2/router';
+import {PartiesForm} from './parties-form/parties-form';
 
 @Component({
     selector: 'app',
@@ -33,6 +34,9 @@ export class App {
         requestService.GetTodoItems().then(res => {
             this.result = JSON.stringify(res.json());
         });
+    }
+    removeParty(party: Party) {
+        Parties.remove(party._id);
     }
 
     UpdateTodoItem() {
