@@ -11,14 +11,19 @@ import {Http, HTTP_PROVIDERS} from 'angular2/http';
 import {TodoItem} from "../collections/TodoItem.ts";
 import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig, APP_BASE_HREF} from 'angular2/router';
 import {PartiesForm} from './parties-form/parties-form';
-
+import {PartiesList} from './parties-list/parties-list.ts';
+import {PartyDetails} from "./party-details/party-details";
 @Component({
     selector: 'app',
     templateUrl: 'client/app.html',
-    directives: [ROUTER_DIRECTIVES],
+    directives: [ROUTER_DIRECTIVES, PartiesForm],
     providers: [RequestService, HTTP_PROVIDERS]
 })
 
+@RouteConfig([
+    { path: '/', as: 'PartiesList', component: PartiesList },
+    { path: '/party/:partyId', as: 'PartyDetails', component: PartyDetails }
+])
 export class App {
     parties: Mongo.Cursor<Party>;
     result: any;
