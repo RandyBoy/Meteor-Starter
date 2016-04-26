@@ -3,7 +3,7 @@ import {Injectable}     from 'angular2/core';
 import {Http, Response} from 'angular2/http';
 import {Headers, RequestOptions} from 'angular2/http';
 import * as Rx from 'rxjs/rx';
-import {TodoItem} from "../collections/TodoItem";
+import {TodoItem} from "./TodoItem";
 
 @Injectable()
 export class RequestService {
@@ -28,7 +28,7 @@ export class RequestService {
     }
 
     private handleError(error: Response) {
-        console.error(error);
+       // console.error(error);
         return Rx.Observable.throw(error.json().error || 'Server error'); //||
     }
 }
