@@ -28,7 +28,7 @@ export class RequestService {
     }
 
     private handleError(error: Response) {    
-        window.console.error(error);
+        console.error(error);
         return Rx.Observable.throw(error.json().error || 'Server error');
     }
 }
