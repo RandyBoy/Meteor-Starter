@@ -16,7 +16,6 @@ function buildQuery(partyId?: string): Object {
     if (partyId) {
         return { $and: [{ _id: partyId }, isAvailable] };
     }
-
     return isAvailable;
 }
 

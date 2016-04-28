@@ -16,7 +16,7 @@ export class PartiesList extends MeteorComponent {
 
     constructor() {
         super();
-        // this.parties = Parties.find();
+       // this.parties = Parties.find();      
         this.subscribe('parties', () => {
             this.parties = Parties.find();
         }, true);
@@ -26,6 +26,7 @@ export class PartiesList extends MeteorComponent {
         Parties.remove(party._id);
     }
     search(value: string) {
+        
         if (value) {
             this.parties = Parties.find({ location: value });
         } else {

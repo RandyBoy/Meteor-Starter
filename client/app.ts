@@ -36,11 +36,19 @@ export class App extends MeteorComponent {
     errorMessage: any;
 
     constructor(private requestService: RequestService) {
-        // this.parties = Parties.find();
+
         super();
-        this.subscribe('parties', () => {
-            this.parties = Parties.find();
-        });
+        //this.parties = Parties.find();
+        //  this.subscribe('parties', () => {  private requestService: RequestService
+        //         this.parties = Parties.find();
+        //     });
+
+        this.autorun(() => {
+            this.subscribe('parties', () => {
+                this.parties = Parties.find();
+            });
+        }, true);
+
         requestService.GetTodoItems()
             .subscribe((res) => {
                 this.result = JSON.stringify(res.json());
@@ -58,9 +66,9 @@ export class App extends MeteorComponent {
             error => this.errorMessage = <any>error);
     }
 
-    test() {
-        return Promise.resolve("test");
-    }
+    // test() {
+    //     return Promise.resolve("test");
+    // }
 
 }
 
