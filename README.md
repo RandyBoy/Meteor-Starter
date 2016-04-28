@@ -57,7 +57,8 @@ Windows安装:
   meteor npm install --save angular2-meteor
   meteor npm install --save meteor-node-stubs
   meteor npm install angular2-meteor-auto-bootstrap --save
-===========================================================================================================================  
+ 
+ 
   meteor create meteor-angular2-starter //创建
   meteor run //运行
 npm init //初始化package.json
