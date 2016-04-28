@@ -8,10 +8,11 @@ import {Mongo} from 'meteor/mongo';
 import {RequestService} from '../collections/requestService.ts';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, RouteConfig, APP_BASE_HREF, RouterOutlet} from 'angular2/router';
-import {PartiesList} from './parties-list/parties-list.ts';
-import {PartyDetails} from "./party-details/party-details";
 import {Parties} from '../collections/parties';
 import {TodoItem} from "../collections/TodoItem.ts";
+import {PartiesList} from './parties-list/parties-list.ts';
+import {PartyDetails} from "./party-details/party-details";
+import {HeroParentComponent} from './component-interaction/HeroParentComponent';
 
 @Component({
     selector: 'app',
@@ -22,7 +23,8 @@ import {TodoItem} from "../collections/TodoItem.ts";
 
 @RouteConfig([
     { path: '/', as: 'PartiesList', component: PartiesList, useAsDefault: true },
-    { path: '/party/:partyId', as: 'PartyDetails', component: PartyDetails }
+    { path: '/party/:partyId', as: 'PartyDetails', component: PartyDetails },
+    { path: '/parenttochildbinding', as: 'ParentToChildBinding', component: HeroParentComponent }
 ])
 export class App extends MeteorComponent {
     parties: Mongo.Cursor<Party>;
@@ -37,9 +39,10 @@ export class App extends MeteorComponent {
         this.subscribe('parties', () => {
             this.parties = Parties.find();
         });
-        requestService.GetTodoItems().then(res => {
-            this.result = JSON.stringify(res.json());
-        });
+        requestService.GetTodoItems()
+            .subscribe((res) => {
+                this.result = JSON.stringify(res.json());
+            });
     }
 
     UpdateTodoItem() {
@@ -51,6 +54,10 @@ export class App extends MeteorComponent {
                 this.todoJson = JSON.stringify(this.todoItems);
             },
             error => this.errorMessage = <any>error);
+    }
+
+    test() {
+        return Promise.resolve("test");
     }
 
 }

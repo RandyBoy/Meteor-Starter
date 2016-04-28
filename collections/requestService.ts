@@ -13,7 +13,7 @@ export class RequestService {
     GetTodoItems() {
         let headers = new Headers(); //{ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers, url: "http://localhost:3000" });
-        return this.http.get("http://localhost:5000/api/todo/index").toPromise();
+        return this.http.get("http://localhost:5000/api/todo/index");
     }
 
     AddTodoItem(id: number, title: string, isDone?: boolean): Rx.Observable<TodoItem[]> {
@@ -27,8 +27,8 @@ export class RequestService {
             .catch(this.handleError);
     }
 
-    private handleError(error: Response) {
-        console.error(error);
-        return Rx.Observable.throw(error.json().error || 'Server error'); //||
+    private handleError(error: Response) {    
+        window.console.error(error);
+        return Rx.Observable.throw(error.json().error || 'Server error');
     }
 }
