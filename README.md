@@ -57,4 +57,35 @@ Windows安装:
   meteor npm install --save meteor-node-stubs
   meteor npm install angular2-meteor-auto-bootstrap --save
   
+  meteor create meteor-angular2-starter //创建
+  meteor run //运行
+npm init //初始化package.json
+
+添加tsconfig.ts:
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "module": "commonjs",
+        "target": "es5",
+        "isolatedModules": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "removeComments": false,
+        "noImplicitAny": false,
+        "sourceMap": true
+    }
+}
+
+meteor add angular2-compilers //添加NG2编译器
+meteor npm install --save angular2-meteor 
+meteor npm install --save meteor-node-stubs
+meteor npm install angular2-meteor-auto-bootstrap --save
+meteor remove blaze-html-templates
+
+npm install typings -g
+typings install es6-promise
+typings install es6-shim --ambient
+typings install meteor --ambient
+
+  
   
