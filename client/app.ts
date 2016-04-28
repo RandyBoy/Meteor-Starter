@@ -13,6 +13,7 @@ import {TodoItem} from "../collections/TodoItem.ts";
 import {PartiesList} from './parties-list/parties-list.ts';
 import {PartyDetails} from "./party-details/party-details";
 import {HeroParentComponent} from './component-interaction/HeroParentComponent';
+import { CountdownViewChildParentComponent } from './component-interaction/CountdownViewChildParentComponent';
 
 @Component({
     selector: 'app',
@@ -24,7 +25,8 @@ import {HeroParentComponent} from './component-interaction/HeroParentComponent';
 @RouteConfig([
     { path: '/', as: 'PartiesList', component: PartiesList, useAsDefault: true },
     { path: '/party/:partyId', as: 'PartyDetails', component: PartyDetails },
-    { path: '/parenttochildbinding', as: 'ParentToChildBinding', component: HeroParentComponent }
+    { path: '/ptcinput', as: 'PTCInput', component: HeroParentComponent },
+    { path: '/ptcviewchild', as: 'PTCviewchild', component: CountdownViewChildParentComponent }
 ])
 export class App extends MeteorComponent {
     parties: Mongo.Cursor<Party>;
